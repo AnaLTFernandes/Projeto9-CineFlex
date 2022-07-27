@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import loading from '../../images/spinner.gif'
 
 import './FilmsSection.css';
 
@@ -14,17 +15,24 @@ export default function FilmsSection () {
 
     return (
         <main>
-            <h1>Selecione o filme</h1>
+            {movies.length === 0
+                ?   (<div className='loading'>
+                        <img alt='Carregando...' src={loading} />
+                    </div>)
+                :   (<>
+                        <h1>Selecione o filme</h1>
 
-            <div className='contents'>
-                {movies.map(({ title, posterURL, id }, index) =>
-                    <Link to={`/filme/${id}`}>
-                        <div key={index} className='film-poster'>
-                            <img alt={title} src={posterURL}/>
+                        <div className='contents'>
+                            {movies.map(({ title, posterURL, id }, index) =>
+                                <Link to={`/filme/${id}`}>
+                                    <div key={index} className='film-poster'>
+                                        <img alt={title} src={posterURL}/>
+                                    </div>
+                                </Link>
+                            )}
                         </div>
-                    </Link>
-                )}
-            </div>
+                    </>)
+            }
         </main>
     );
 }
