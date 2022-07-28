@@ -1,0 +1,44 @@
+main.sessions {
+    margin-bottom: 160px;
+}
+
+.session {
+    margin-bottom: 30px;
+}
+
+.session span {
+    font-weight: 400;
+    font-size: 20px;
+}
+
+.session .session-times {
+    width: 175px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 25px;
+}
+
+.session .session-times div {
+    width: 83px;
+    height: 43px;
+    border-radius: 3px;
+    background-color: #E8833A;
+    font-weight: 400;
+    font-size: 18px;
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.session .session-times div:hover {
+    filter: brightness(0.8);
+}
+
+@media (min-width: 430px) {
+    main.sessions {
+        width: fit-content;
+    }
+}

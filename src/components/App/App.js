@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import FilmsSecion from '../FilmsSection/FilmsSection';
+import Films from '../Films/Films';
+import Sessions from '../Sessions/Sessions';
 
 import './reset.css';
 import './App.css';
@@ -14,8 +15,8 @@ function App() {
 
       <Routes>
 
-        <Route path='/' element={<FilmsSecion />}/>
-        <Route path='/filme/' element={<FilmsSecion />}/>
+        <Route path='/' element={<Films />}/>
+        <Route path='/sessoes/:idFilme' element={<Sessions />}/>
 
       </Routes>
       
