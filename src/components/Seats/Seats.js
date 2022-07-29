@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Loading from '../Loading/Loading'
 import Footer from '../Footer/Footer';
 
 import './Seats.css';
 
-function SeatUnavailable (visibility, setVisibily) {
+function SeatUnavailable (setVisibily) {
 
     setVisibily('visible');
 
@@ -15,7 +15,7 @@ function SeatUnavailable (visibility, setVisibily) {
     }, 2500);
 }
 
-function SeatsSection ({ name, isAvailable, selected, idSeat, index, visibility, setVisibily, idSeats, setIdSeats }) {
+function SeatsSection ({ name, isAvailable, selected, idSeat, index, setVisibily, idSeats, setIdSeats }) {
     const [clicked, setClicked] = useState(selected);
 
     function click () {
@@ -34,7 +34,7 @@ function SeatsSection ({ name, isAvailable, selected, idSeat, index, visibility,
     }
 
     function alert () {
-        SeatUnavailable(visibility, setVisibily);
+        SeatUnavailable(setVisibily);
     }
     
     return (
@@ -69,40 +69,46 @@ function InputArea ({ idSeats }) {
 
     const [name, setName] = useState('');
     const [cpf, setCpf] = useState('');
+
+    const navigate = useNavigate();
      
-    function submit (event) {
+    function handleSubmit (event) {
         event.preventDefault();
+
         if (idSeats.length > 0) {
             const obj = {
-                id:[...idSeats],
+                ids:[...idSeats],
                 name,
                 cpf
             }
-            console.log(obj)
-        }
 
+            const promise = axios.post(`https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many`, obj);
+            promise.then(navigate('/sucesso'));
+        }
     }
 
     return (
         <div className='input-area'>
-            <form onSubmit={submit}>
+            <form onSubmit={handleSubmit}>
                 <div>
                     <label htmlFor='name'>Nome do comprador:</label>
                     <input 
-                        required id='name' 
+                        required 
+                        id='name' 
                         type="text" 
                         value={name}
                         onChange={event => setName(event.target.value)}
                         placeholder='Digite seu nome...'></input>
                 </div>
                 <div>
-                    <label htmlFor='cpf' >CPF do comprador:</label>
+                    <label htmlFor='cpf'>CPF do comprador:</label>
                     <input 
                         required 
                         id='cpf' 
                         type="text" 
                         value={cpf}
                         onChange={event => setCpf(event.target.value)}
+                        pattern='([0-9]{2}[\.]?[0-9]{3}[\.]?[0-9]{3}[\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2})'
                         placeholder='Digite seu CPF...'></input>
                 </div>
                 <button>Reservar assento(s)</button>
