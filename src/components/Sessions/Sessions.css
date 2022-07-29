@@ -1,4 +1,4 @@
-main.sessions {
+main.section {
     margin-bottom: 160px;
 }
 
@@ -38,7 +38,7 @@ main.sessions {
 }
 
 @media (min-width: 430px) {
-    main.sessions {
+    main.section {
         width: fit-content;
     }
 }

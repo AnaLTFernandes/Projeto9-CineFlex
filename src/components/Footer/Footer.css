@@ -15,36 +15,40 @@ main footer {
     padding: 0 10px;
 }
 
-.sessions footer div {
+.section footer > div > div {
     width: 73%;
+}
+
+.section footer div {
     display: flex;
     flex-direction: column;
 }
 
-.sessions footer > div {
+.section footer > div {
     width: 100%;
     display: flex;
     flex-direction: row;
     align-items: center;
 }
 
-.sessions footer .film-poster {
+.section footer .film-poster {
     width: 64px;
     height: 89px;
     margin: 0 14px 0 0;
     cursor: auto;
 }
 
-.sessions footer .film-poster:hover {
+.section footer .film-poster:hover {
     filter: brightness(1);
 }
 
-.sessions footer .film-poster img {
+.section footer .film-poster img {
     width: 48px;
     height: 72px;
 }
 
-.sessions footer span {
+.section footer span {
+    height: 32px;
     font-weight: 400;
     font-size: 26px;
     white-space: nowrap;
@@ -57,11 +61,11 @@ main footer {
         justify-content: center;
     }
 
-    .sessions footer > div {
+    .section footer > div {
         width: fit-content;
     }
 
-    .sessions footer div {
+    .section footer > div > div {
         width: auto;
     }
 }

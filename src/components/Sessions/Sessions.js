@@ -11,8 +11,8 @@ function Times ({ showtimes }) {
     return (
         <div className='session-times'>
             {showtimes.map(({ name, id }, index) => 
-                <Link to={`/assentos/${id}`}>
-                    <div key={index}>{name}</div>
+                <Link to={`/assentos/${id}`} key={index}>
+                    <div>{name}</div>
                 </Link>
             )}
         </div>
@@ -31,7 +31,7 @@ export default function Sessions () {
     return (
         (sessions.length === 0
             ?  (<Loading />)
-            :   (<main className='sessions'>
+            :   (<main className='section'>
 
                     <h1>Selecione o horário</h1>
 
