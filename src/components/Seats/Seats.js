@@ -6,10 +6,30 @@ import Footer from '../Footer/Footer';
 
 import './Seats.css';
 
-function SeatsSection ({ name, isAvailable, index }) {
+function SeatUnavailable (visibility, setVisibily) {
+
+    setVisibily('visible');
+
+    setTimeout(() => {
+        setVisibily('invisible');
+    }, 2500);
+}
+
+function SeatsSection ({ name, isAvailable, selected, index, visibility, setVisibily }) {
+    const [clicked, setClicked] = useState(selected);
+
+    function click () {
+        setClicked(!clicked);
+    }
+
+    function alert () {
+        SeatUnavailable(visibility, setVisibily);
+    }
+    
     return (
         <div key={index}
-            className={(`seat ${isAvailable ? 'available' : 'unavailable'}`).trim()}>
+            className={(`seat ${isAvailable ? 'available' : 'unavailable'} ${clicked ? 'selected' : ''}`).trim()}
+            onClick={isAvailable ? click : alert}>
                 {name}
         </div>
     );
@@ -53,26 +73,49 @@ function InputArea () {
 }
 
 export default function Seats () {
-    const [seats, setSeats] = useState([]);
+    const [places, setPlaces] = useState([]);
+    const [visibility, setVisibily] = useState('invisible');
     const { idSession } = useParams();
 
     useEffect(() => {
         const promise = axios.get(`https://mock-api.driven.com.br/api/v5/cineflex/showtimes/${idSession}/seats`);
-        promise.then(response => setSeats(response.data));
+        promise.then(response => setPlaces(response.data));
     }, [idSession]);
 
-    console.log(seats)
+    let newSeats = [];
+
+    if (places.length !== 0) {
+        
+        places.seats.map(seat => {
+            if (seat.isAvailable) { 
+                newSeats.push({...seat, selected: false});
+            } else {
+                newSeats.push({...seat});
+            }
+        });
+    }
 
     return (
-        (seats.length === 0
+        (places.length === 0
             ?  (<Loading />)
             :   (<main className='section'>
+
+                    <div className={(`seat-alert ${visibility}`).trim()}>
+                        Esse assento não está disponível
+                    </div>
 
                     <h1>Selecione o(s) assento(s)</h1>
 
                     <div className='seats'>
-                        {seats.seats.map(({ name, isAvailable }, index) => (
-                            <SeatsSection name={name} isAvailable={isAvailable} index={index}/>
+                        {newSeats.map(({ name, isAvailable, selected }, index) => (
+                            <SeatsSection 
+                                name={name} 
+                                isAvailable={isAvailable} 
+                                selected={selected} 
+                                index={index} 
+                                visibility={visibility} 
+                                setVisibily={setVisibily} 
+                            />
                         ))}
                     </div>
 
@@ -83,14 +126,14 @@ export default function Seats () {
                     <Footer>
                         <div>
                             <div className='film-poster'>
-                                <img alt={seats.movie.title} src={seats.movie.posterURL}/>
+                                <img alt={places.movie.title} src={places.movie.posterURL}/>
                             </div>
                             <div>
                                 <div>
-                                    <span>{seats.movie.title}</span>
+                                    <span>{places.movie.title}</span>
                                 </div>
                                 <div>
-                                    <span>{seats.day.weekday} - {seats.name}</span>
+                                    <span>{places.day.weekday} - {places.name}</span>
                                 </div>
                             </div>
                         </div>
