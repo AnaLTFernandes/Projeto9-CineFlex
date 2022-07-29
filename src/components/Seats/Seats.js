@@ -15,11 +15,22 @@ function SeatUnavailable (visibility, setVisibily) {
     }, 2500);
 }
 
-function SeatsSection ({ name, isAvailable, selected, index, visibility, setVisibily }) {
+function SeatsSection ({ name, isAvailable, selected, idSeat, index, visibility, setVisibily, idSeats, setIdSeats }) {
     const [clicked, setClicked] = useState(selected);
 
     function click () {
         setClicked(!clicked);
+
+        const index = idSeats.indexOf(idSeat);
+
+        if (!clicked && (index === -1)) {
+            setIdSeats([...idSeats, idSeat])
+        }
+        if (clicked && (index > -1)) {
+            const ids = [...idSeats];
+            ids.splice(index, 1);
+            setIdSeats([...ids]);
+        }
     }
 
     function alert () {
@@ -54,17 +65,45 @@ function SubtitleSeats () {
     );
 }
 
-function InputArea () {
+function InputArea ({ idSeats }) {
+
+    const [name, setName] = useState('');
+    const [cpf, setCpf] = useState('');
+     
+    function submit (event) {
+        event.preventDefault();
+        if (idSeats.length > 0) {
+            const obj = {
+                id:[...idSeats],
+                name,
+                cpf
+            }
+            console.log(obj)
+        }
+
+    }
+
     return (
         <div className='input-area'>
-            <form>
+            <form onSubmit={submit}>
                 <div>
-                    <label for='name'>Nome do comprador:</label>
-                    <input id='name' type="text" required placeholder='Digite seu nome...'></input>
+                    <label htmlFor='name'>Nome do comprador:</label>
+                    <input 
+                        required id='name' 
+                        type="text" 
+                        value={name}
+                        onChange={event => setName(event.target.value)}
+                        placeholder='Digite seu nome...'></input>
                 </div>
                 <div>
-                    <label for='cpf' >CPF do comprador:</label>
-                    <input if='cpf' type="text" required placeholder='Digite seu CPF...'></input>
+                    <label htmlFor='cpf' >CPF do comprador:</label>
+                    <input 
+                        required 
+                        id='cpf' 
+                        type="text" 
+                        value={cpf}
+                        onChange={event => setCpf(event.target.value)}
+                        placeholder='Digite seu CPF...'></input>
                 </div>
                 <button>Reservar assento(s)</button>
             </form>
@@ -75,6 +114,7 @@ function InputArea () {
 export default function Seats () {
     const [places, setPlaces] = useState([]);
     const [visibility, setVisibily] = useState('invisible');
+    const [idSeats, setIdSeats] = useState([]);
     const { idSession } = useParams();
 
     useEffect(() => {
@@ -82,16 +122,12 @@ export default function Seats () {
         promise.then(response => setPlaces(response.data));
     }, [idSession]);
 
-    let newSeats = [];
+    const newSeats = [];
 
     if (places.length !== 0) {
         
         places.seats.map(seat => {
-            if (seat.isAvailable) { 
-                newSeats.push({...seat, selected: false});
-            } else {
-                newSeats.push({...seat});
-            }
+            newSeats.push({...seat, selected: false});
         });
     }
 
@@ -107,21 +143,25 @@ export default function Seats () {
                     <h1>Selecione o(s) assento(s)</h1>
 
                     <div className='seats'>
-                        {newSeats.map(({ name, isAvailable, selected }, index) => (
+                        {newSeats.map(({ name, isAvailable, selected, id }, index) => (
                             <SeatsSection 
+                                key={index}
                                 name={name} 
                                 isAvailable={isAvailable} 
                                 selected={selected} 
+                                idSeat={id}
                                 index={index} 
                                 visibility={visibility} 
                                 setVisibily={setVisibily} 
+                                idSeats={idSeats}
+                                setIdSeats={setIdSeats}
                             />
                         ))}
                     </div>
 
                     <SubtitleSeats />
 
-                    <InputArea />
+                    <InputArea idSeats={idSeats}/>
 
                     <Footer>
                         <div>
