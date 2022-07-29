@@ -1,0 +1,47 @@
+main.section h1 {
+    width: 150px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 24px;
+    color: #247A6B;
+}
+
+main.section div {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin: 20px 0;
+}
+
+main.section div h1 {
+    width: 100%;
+    height: auto;
+    color: #293845;
+    margin-bottom: 10px;
+    justify-content: flex-start;
+}
+
+main.section div span {
+    width: 100%;
+    font-weight: 400;
+    font-size: 22px;
+    margin-bottom: 5px;
+    color: #293845;
+}
+
+button {
+    width: 225px;
+    height: 42px;
+    border-radius: 3px;
+    border: none;
+    background-color: #E8833A;
+    font-weight: 400;
+    font-size: 18px;
+    color: #FFFFFF;
+    margin: 40px auto 0;
+    cursor: pointer;
+}
+
+button:hover {
+    filter: brightness(0.8);
+}
