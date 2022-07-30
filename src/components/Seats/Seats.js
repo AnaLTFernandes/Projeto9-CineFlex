@@ -65,7 +65,7 @@ function SubtitleSeats () {
     );
 }
 
-function InputArea ({ idSeats }) {
+function InputArea ({ idSeats, data }) {
 
     const [name, setName] = useState('');
     const [cpf, setCpf] = useState('');
@@ -82,8 +82,13 @@ function InputArea ({ idSeats }) {
                 cpf
             }
 
+            const newData = {
+                ...data,
+                ...obj
+            }
+
             const promise = axios.post(`https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many`, obj);
-            promise.then(navigate('/sucesso'));
+            promise.then(navigate('/sucesso', { state: newData}));
         }
     }
 
@@ -122,19 +127,43 @@ export default function Seats () {
     const [visibility, setVisibily] = useState('invisible');
     const [idSeats, setIdSeats] = useState([]);
     const { idSession } = useParams();
+    
+    let data = {};
 
     useEffect(() => {
         const promise = axios.get(`https://mock-api.driven.com.br/api/v5/cineflex/showtimes/${idSession}/seats`);
         promise.then(response => setPlaces(response.data));
     }, [idSession]);
 
+    function dados (info) {
+        data = {
+            movieTitle: info.movie.title,
+            movieDate: info.day.date,
+            movieSession: info.name
+        }
+    }
+
     const newSeats = [];
+    const seatsName = [];
 
     if (places.length !== 0) {
+
+        dados(places)
         
         places.seats.map(seat => {
             newSeats.push({...seat, selected: false});
         });
+
+        newSeats.map(seat => {
+            if (idSeats.includes(seat.id)) {
+                seatsName.push(seat.name);
+            }
+        })
+
+        data = {
+            ...data,
+            seatsName
+        }
     }
 
     return (
@@ -167,7 +196,7 @@ export default function Seats () {
 
                     <SubtitleSeats />
 
-                    <InputArea idSeats={idSeats}/>
+                    <InputArea idSeats={idSeats} data={data}/>
 
                     <Footer>
                         <div>
