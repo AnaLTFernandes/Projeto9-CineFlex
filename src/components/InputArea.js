@@ -27,7 +27,7 @@ export default function InputArea ({ idSeats, reserveData }) {
                 ...body
             }
 
-            const promise = axios.post(`https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many`, body);
+            const promise = axios.post(`https://mock-api.driven.com.br/api/v7/cineflex/seats/book-many`, body);
             promise.then(navigate('/sucesso', { state: newData }));
         }
     }

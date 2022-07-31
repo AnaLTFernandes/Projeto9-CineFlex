@@ -43,4 +43,8 @@ const Head = styled.header`
         filter: invert(0.4);
         cursor: pointer;
     }
+
+    img:hover {
+        filter: invert(0.6);
+    }
 `;

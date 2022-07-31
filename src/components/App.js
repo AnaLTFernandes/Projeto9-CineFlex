@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Header from './Header';
 import Films from './Films';
 import Sessions from './Sessions';
+import Overview from './Overview';
 import Seats from './Seats';
 import Success from './Success';
 
@@ -22,6 +23,7 @@ function App() {
 
         <Route path='/' element={ <Films setHome={setHome}/> } />
         <Route path='/sessoes/:idFilme' element={ <Sessions setHome={setHome}/> }/>
+        <Route path='/:nome/overview' element={ <Overview /> }/>
         <Route path='/assentos/:idSession' element={ <Seats /> }/>
         <Route path='/sucesso' element={ <Success setHome={setHome} /> }/>
 

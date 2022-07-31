@@ -1,11 +1,13 @@
 import styled from 'styled-components';
 
 import { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 
 import axios from 'axios';
 import Loading from './Loading';
 import Footer from './Footer';
+
+import more from '../images/more.svg';
 
 
 function Times ({ showtimes }) {
@@ -40,13 +42,21 @@ function Days ({ days }) {
 export default function Sessions ({ setHome }) {
     const [sessions, setSessions] = useState([]);
     const { idFilme } = useParams();
+
+    const navigate = useNavigate();
     
     setHome(false);
 
     useEffect (() => {
-        const promise = axios.get(`https://mock-api.driven.com.br/api/v5/cineflex/movies/${idFilme}/showtimes`);
+        const promise = axios.get(`https://mock-api.driven.com.br/api/v7/cineflex/movies/${idFilme}/showtimes`);
         promise.then(response => setSessions(response.data));
     }, [idFilme]);
+
+    function seeMore(event) {
+        event.preventDefault();
+
+        navigate(`/${sessions.title}/overview`, { state: sessions });
+    }
 
     return (
         (sessions.length === 0
@@ -65,6 +75,7 @@ export default function Sessions ({ setHome }) {
                             <Data>
                                 <span>{sessions.title}</span>
                             </Data>
+                            <Image alt='more' src={more} onClick={seeMore}/>
                         </Container>
                     </Footer>
             
@@ -135,9 +146,11 @@ const Container = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
+    position: relative;
 
     @media (min-width: 430px) {
         width: fit-content;
+        min-width: 300px;
     }
 `;
 
@@ -158,10 +171,6 @@ const Poster = styled.div`
         width: 48px;
         height: 72px;
     }
-
-    &:hover {
-        filter: brightness(1);
-    }
 `;
 
 const Data = styled.div`
@@ -180,5 +189,23 @@ const Data = styled.div`
 
     @media (min-width: 430px) {
         width: auto;
+    }
+`;
+
+const Image = styled.img`
+    width: 25px;
+    height: auto;
+    position: absolute;
+    top: -3px;
+    right: 10%;
+    opacity: 0.6;
+    cursor: pointer;
+
+    &:hover {
+        opacity: 0.3;
+    }
+
+    @media (min-width: 430px) {
+        right: -10px;
     }
 `;
