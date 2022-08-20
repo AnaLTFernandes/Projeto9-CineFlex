@@ -1,10 +1,10 @@
 # :movie_camera: Cineflex
 
-App para reservar assentos de um filme em cartaz, podendo-se escolher o dia e horário.
+App para reservar assentos para um filme em cartaz, podendo-se escolher o dia e horário.
 
 <div align=center>
   
-  ![Cineflex gif](https://user-images.githubusercontent.com/97851922/185722037-d5e76372-4c30-42d4-b653-54e0af78e1e8.gif)
+  ![Cineflex gif](https://user-images.githubusercontent.com/97851922/185723388-caa1622f-72d8-4802-870a-e645f9e600ef.gif)
   
 </div>
 
