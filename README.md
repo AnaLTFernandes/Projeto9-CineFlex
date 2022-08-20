@@ -70,7 +70,7 @@ Reserve já seu assento: https://projeto9-cineflex-nine-nu.vercel.app/
 <img align="left" alt="react-components" height="25px" src="https://img.shields.io/badge/React-components-success" />
 <img align="left" alt="react-axios" height="25px" src="https://img.shields.io/badge/React-axios-success" />
 <img align="left" alt="react-router-dom" height="25px" src="https://img.shields.io/badge/React-router--dom-success" />
-<img align="left" alt="react-components" height="25px" src="https://img.shields.io/badge/React-styled--components-success" />
+<img align="left" alt="styled-components" height="25px" src="https://img.shields.io/badge/style-styled--components-violet" />
 
 
 <br />
