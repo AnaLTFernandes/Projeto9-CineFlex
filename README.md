@@ -1,5 +1,7 @@
 # :movie_camera: Cineflex
 
+![Badge Finalizado](https://img.shields.io/static/v1?label=STATUS&message=FINALIZADO&color=success&style=for-the-badge)
+
 App para reservar assentos para um filme em cartaz, podendo-se escolher o dia e horário.
 
 <div align=center>
